@@ -1,6 +1,6 @@
 {
-    "name": "maxim/test-task",
-    "description": "Delivery stage automation demo for Bitrix-style CRM events",
+    "name": "d1erise/test-task",
+    "description": "Тестовое задание для НКО Евразия",
     "type": "project",
     "require": {
         "php": "^8.1",
