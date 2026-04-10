@@ -19,25 +19,6 @@ class IngestWebhookEvent
     ) {
     }
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function handle(array $payload): array
     {
         $memberId = (string) ($payload['member_id'] ?? $payload['auth']['member_id'] ?? '');
