@@ -1,0 +1,54 @@
+services:
+  app:
+    build: .
+    env_file:
+      - .env
+    command: php -S 0.0.0.0:8080 -t public public/router.php
+    ports:
+      - "8080:8080"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      courier-mock:
+        condition: service_started
+    volumes:
+      - app_var:/app/var
+
+  worker:
+    build: .
+    env_file:
+      - .env
+    command: php bin/app app:consume
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      courier-mock:
+        condition: service_started
+    restart: unless-stopped
+    volumes:
+      - app_var:/app/var
+
+  courier-mock:
+    build: .
+    env_file:
+      - .env
+    command: php -S 0.0.0.0:8080 -t mock-courier/public mock-courier/public/router.php
+    ports:
+      - "8081:8080"
+
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+volumes:
+  app_var:

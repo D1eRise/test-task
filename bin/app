@@ -1,0 +1,32 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+$command = $argv[1] ?? 'help';
+
+if (in_array($command, ['help', '--help', '-h'], true)) {
+    fwrite(STDOUT, implode(PHP_EOL, [
+        'Available commands:',
+        '  db:migrate',
+        '  app:reset-state',
+        '  app:subscribe-webhook [--handler-url=https://example.com/webhook/secret]',
+        '  app:consume [--limit=200] [--dry-run]',
+        '  app:simulate-events [--count=200] [--duplicate-every=25] [--deal-ids=1,2,3] [--previous-stage=PROCESS]',
+        '  app:report',
+    ]) . PHP_EOL);
+
+    exit(0);
+}
+
+
+
+
+
+
+
+
+
+$app = require __DIR__ . '/../config/bootstrap.php';
+
+exit($app['commandRunner']->run($argv));

@@ -1,0 +1,9 @@
+/vendor/
+/.idea/
+/.env
+/var/*.sqlite
+/var/*.sqlite-*
+/var/logs/
+/var/cache/
+/.phpunit.result.cache
+/.phpunit.cache/
