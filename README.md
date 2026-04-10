@@ -139,7 +139,7 @@ OAuth-поля из `auth` не используются как источник
 
 - Входящие события пишутся в локальную таблицу `incoming_events`, где `event_key` уникален.
 - Повтор того же webhook не публикует второе сообщение.
-- Стандартный `ONCRMDEALUPDATE` не даёт прошлую стадию и обычно присылает только `FIELDS[ID]`, поэтому локальный `deal_state` хранит последнюю известную `stage/category`, а при пустом snapshot сервис дополнительно смотрит `crm.stagehistory.list`.
+- `ONCRMDEALUPDATE` присылает только `FIELDS[ID]`, поэтому локальный `deal_state` хранит последнюю известную стадию, а при пустом snapshot сервис дополнительно смотрит `crm.stagehistory.list`.
 - Если публикация в RabbitMQ не удалась, snapshot стадии не переключается в `DELIVERY`, поэтому повторная доставка того же перехода не теряется.
 - При worker-ошибке событие получает `failed`, сообщение уходит в `nack/requeue`, а retry budget ограничен.
 - Ошибки publish в RabbitMQ не расходуют worker retry budget.
