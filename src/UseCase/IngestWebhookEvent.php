@@ -230,7 +230,7 @@ class IngestWebhookEvent
         }
 
         try {
-            $history = $this->bitrix->loadRecentDealStageHistory($dealId, 3);
+            $history = $this->bitrix->loadRecentDealStageHistory($dealId, 2);
         } catch (\Throwable) {
             return false;
         }
